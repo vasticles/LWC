@@ -12,7 +12,7 @@ Desktop and Browser. The template was tailored to Android framework, so desktop 
 The structure of the template is as follows:
 
 Main Engine
-  -World/WorldRenderer
+	World/WorldRenderer
     --Layers
       ---Groups
         ----SpriteManager
