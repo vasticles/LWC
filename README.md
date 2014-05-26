@@ -1,4 +1,4 @@
-Live Wallpaper Creator
+#Live Wallpaper Creator
 
 ==========================================================
 THIS IS A PRIVATE REPOSITORY. DISTRIBUTION AND DEMONSTRATION TO THIRD-PARTIES IS ONLY WITH PERMISSION OF AUTHOR
@@ -34,7 +34,7 @@ ForegroundEnergy.json can be seen as an example of a properly formatted and legi
 
 Testing is performed on one group per layer for now.
 
-To Do:
+####To Do:
 - [ ] Add concurrency
 - [ ] Implement AssetManager
 - [ ] Expand JSON deserialization to global (Main Engine) level
@@ -43,11 +43,11 @@ To Do:
 - [ ] Add support for ranges
 - [ ] Add support for multiple values for effect creation
 
-Bugs:
+####Bugs:
 - [ ] Rotation effect gets reset to starting value upon completition
 - [ ] Initial spawn is staggered. AssetManager should fix this
 
-Further Features:
+####Further Features:
 - [ ] Add gif support (consider writing a gif decoder)
 - [ ] Implement a variety of custom and built-in tweening functions
 - [ ] Experiment with Particle Emitter
