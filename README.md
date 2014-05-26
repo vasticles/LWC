@@ -1,8 +1,8 @@
 Live Wallpaper Creator
 
-===================================================================================================================
-==THIS IS A PRIVATE REPOSITORY. DISTRIBUTION AND DEMONSTRATION TO THIRD-PARTIES IS ONLY WITH PERMISSION OF AUTHOR==
-===================================================================================================================
+==========================================================
+THIS IS A PRIVATE REPOSITORY. DISTRIBUTION AND DEMONSTRATION TO THIRD-PARTIES IS ONLY WITH PERMISSION OF AUTHOR
+==========================================================
 
 LWC 3 (or 3.5?) can be powered by Wicked Template that is written using mainly LibGdx library.
 
@@ -12,14 +12,14 @@ Desktop and Browser. The template was tailored to Android framework, so desktop 
 The structure of the template is as follows:
 
 Main Engine
--World/WorldRenderer
---Layers
----Groups
-----SpriteManager
------Sprites
-------StateManager
--------States
---------Effects
+  -World/WorldRenderer
+    --Layers
+      ---Groups
+        ----SpriteManager
+          -----Sprites
+            ------StateManager
+              -------States
+                --------Effects
 
 Effects are created using the universal java tween engine to interpolate sprite properties.
 Supported effects:
