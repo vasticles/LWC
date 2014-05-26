@@ -1,0 +1,165 @@
+wicked_template.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bg
+  rotate: true
+  xy: 2, 2
+  size: 1440, 1280
+  orig: 1440, 1280
+  offset: 0, 0
+  index: -1
+e1
+  rotate: true
+  xy: 1239, 1703
+  size: 61, 68
+  orig: 61, 68
+  offset: 0, 0
+  index: -1
+e2
+  rotate: false
+  xy: 1239, 1601
+  size: 88, 100
+  orig: 88, 100
+  offset: 0, 0
+  index: -1
+e3
+  rotate: false
+  xy: 1182, 1628
+  size: 55, 74
+  orig: 55, 74
+  offset: 0, 0
+  index: -1
+e4
+  rotate: false
+  xy: 1101, 1527
+  size: 136, 99
+  orig: 136, 99
+  offset: 0, 0
+  index: -1
+e5
+  rotate: false
+  xy: 1101, 1628
+  size: 79, 60
+  orig: 79, 60
+  offset: 0, 0
+  index: -1
+e6
+  rotate: false
+  xy: 1101, 1690
+  size: 78, 65
+  orig: 78, 65
+  offset: 0, 0
+  index: -1
+e7
+  rotate: false
+  xy: 1239, 1527
+  size: 91, 72
+  orig: 91, 72
+  offset: 0, 0
+  index: -1
+e8
+  rotate: false
+  xy: 1101, 1757
+  size: 66, 61
+  orig: 66, 61
+  offset: 0, 0
+  index: -1
+goku
+  rotate: true
+  xy: 2, 1527
+  size: 486, 1097
+  orig: 486, 1097
+  offset: 0, 0
+  index: -1
+l1
+  rotate: true
+  xy: 2, 2015
+  size: 26, 1280
+  orig: 62, 1280
+  offset: 18, 0
+  index: -1
+l2
+  rotate: true
+  xy: 2, 1499
+  size: 26, 1280
+  orig: 62, 1280
+  offset: 17, 0
+  index: -1
+l3
+  rotate: true
+  xy: 2, 1444
+  size: 53, 1280
+  orig: 125, 1280
+  offset: 36, 0
+  index: -1
+l4
+  rotate: false
+  xy: 1284, 2
+  size: 53, 1280
+  orig: 125, 1280
+  offset: 36, 0
+  index: -1
+p1
+  rotate: false
+  xy: 1322, 1453
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+p2
+  rotate: true
+  xy: 1284, 1470
+  size: 21, 24
+  orig: 21, 24
+  offset: 0, 0
+  index: -1
+p3
+  rotate: false
+  xy: 1310, 1490
+  size: 19, 17
+  orig: 19, 17
+  offset: 0, 0
+  index: -1
+p4
+  rotate: false
+  xy: 1322, 1433
+  size: 15, 18
+  orig: 15, 18
+  offset: 0, 0
+  index: -1
+p5
+  rotate: true
+  xy: 1310, 1470
+  size: 18, 19
+  orig: 18, 19
+  offset: 0, 0
+  index: -1
+p6
+  rotate: true
+  xy: 1284, 1433
+  size: 35, 36
+  orig: 35, 36
+  offset: 0, 0
+  index: -1
+p7
+  rotate: false
+  xy: 1284, 1395
+  size: 40, 36
+  orig: 40, 36
+  offset: 0, 0
+  index: -1
+p8
+  rotate: true
+  xy: 1284, 1350
+  size: 43, 46
+  orig: 43, 46
+  offset: 0, 0
+  index: -1
+z2
+  rotate: false
+  xy: 1284, 1284
+  size: 46, 64
+  orig: 46, 66
+  offset: 0, 0
+  index: -1

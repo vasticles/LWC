@@ -1,0 +1,60 @@
+---
+#Group specs
+mWidth: 1920.0
+mHeight: 1080.0
+scaleFactor: 1.3
+groupX: 0.0
+groupY: 0.0
+mParallaxFactor: 1.0
+
+#Sprites specs
+atlasPath: "data/landscape.atlas"
+spriteNames:
+ - l1
+ - l2
+ - l3
+ - l4
+spawnPointsValues:
+ - [700.0, 0.0]
+ - [800.0, 0.0]
+ - [900.0, 0.0]
+ - [1000.0, 0.0]
+ - [1100.0, 0.0]
+ - [1200.0, 0.0]
+numOfSpritesRange:
+ - 2
+ - 2
+mStretched: false
+
+#Sprite Phase lifespans
+spawningLifeSpans:
+ - 1.0
+ - 2.0
+aliveLifeSpans:
+ - 1.0
+ - 2.0
+dyingLifeSpans:
+ - 1.0
+ - 2.0
+#deadLifeSpans is effectively the spawn interval between sprites 
+deadLifeSpans:
+ - 1.0
+ - 3.0
+
+#Sprite Phase States
+#states:
+#  !com.sbg.wickedtemplate.State
+#  name: SPAWNINGSTATE
+#  duration: 4
+#  name: SPAWNINGSTATEE
+#  duration: 4
+# - [1,2]
+
+state:
+ name: SPAWNINGSTATE
+ duration: 4
+ 
+states:
+ - 0:
+  - name: SPAWNINGSTATE
+    duration: 4
