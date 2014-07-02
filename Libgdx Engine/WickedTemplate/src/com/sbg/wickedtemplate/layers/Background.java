@@ -7,14 +7,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import com.sbg.wickedtemplate.Effect;
 import com.sbg.wickedtemplate.Group;
-import com.sbg.wickedtemplate.effects.Effect;
 import com.sbg.wickedtemplate.utils.EffectsAdapter;
 
 public class Background extends Layer {
 
-	public Background(int i) {
-		super(i);
+	public Background(int i, float p) {
+		super(i, p);
 		
 		//Not sure if this is the most efficient way of getting the json file into a reader
 		Reader configFile = Gdx.files.internal("data/Background.json").reader();

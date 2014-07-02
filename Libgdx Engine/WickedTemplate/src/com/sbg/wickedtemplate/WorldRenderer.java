@@ -24,7 +24,8 @@ public class WorldRenderer {
 	
 	public void render(SpriteBatch batch) {
 		for(Layer l : mLayers) {
-			l.getGroup().draw(batch);
+//			l.getGroup().draw(batch);
+			l.draw(batch);
 		}
 	}
 }

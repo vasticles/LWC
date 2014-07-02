@@ -9,7 +9,6 @@ import java.util.List;
 import aurelienribon.tweenengine.Timeline;
 
 import com.badlogic.gdx.utils.Array;
-import com.sbg.wickedtemplate.effects.Effect;
 
 /**
 State class holds various effects that can be applied to the sprite's properties.
@@ -23,7 +22,7 @@ begins playing.
 public class State {
 	public Phase phase;
 	public String name;
-	public long duration;
+	private float duration;
 	public List<Effect> effectsList;
 	public Effect effect;
 	public Array<Effect> effects;
@@ -39,15 +38,28 @@ public class State {
 
 	public void init() {
 		effects = new Array<Effect>();
-		// tweenManager = new TweenManager();
 		timeline = Timeline.createSequence();
+	}
+	
+	public float updateDuration(float elapsedTime) {
+		return duration-=elapsedTime;
 	}
 
 	public void setStateDuration() {
 		for (Effect e : effects) {
-			// long sum = e.duration+e.offset;
 			duration = e.totalDuration > duration ? e.totalDuration : duration;
 		}
 	}
+	
+	public float getStateDuration() {
+		return duration;
+	}
 
+	public Phase getPhase() {
+		return phase;
+	}
+	
+	public Timeline getTimeline() {
+		return timeline;
+	}
 }

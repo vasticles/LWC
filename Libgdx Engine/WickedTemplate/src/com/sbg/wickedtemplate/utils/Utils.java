@@ -2,15 +2,18 @@ package com.sbg.wickedtemplate.utils;
 
 import java.util.Random;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Logger;
+import com.sbg.wickedtemplate.LWP_Engine;
 
 /**
 Simple Utility class that holds various useful methods.
  **/
 
 public class Utils {
-	public static Logger log;
+	private static Logger log = LWP_Engine.log;
 	private static Random r = new Random();
+	private static long currentTime;
 	
 	public Utils() {
 //		log = new Logger()
@@ -33,9 +36,22 @@ public class Utils {
 		else return f[r.nextInt(f.length)];
 	}
 	
+	public static Vector2 getRandomFloat(float[][] f) {
+		Vector2 value = new Vector2();
+		if (f[0].length == 1) value.x=f[0][0];
+		else value.x=f[0][r.nextInt(f[0].length)];
+		if (f[1].length == 1) value.y=f[1][0];
+		else value.y=f[1][r.nextInt(f[1].length)];
+		return value;
+	}
+	
 	public static int getRandomInt(int[] i) {
 		if (i.length == 1) return i[0];
 		else return i[r.nextInt(i.length)];
+	}
+	
+	public static Random getRandom() {
+		return r;
 	}
 	
 	public static float pixelToPercent(float f, float totalPix) {
@@ -44,5 +60,19 @@ public class Utils {
 	
 	public static float percentToPixel(float f, float totalPix) {
 		return f/100*totalPix;
+	}
+	
+	public static void startTimer() {
+		currentTime = System.currentTimeMillis();
+	}
+	
+	public static void stopTimer(String tag) {
+		long millisPerUpdate = System.currentTimeMillis() - currentTime;
+//		if (millisPerUpdate >= 20)
+			log.error(tag+" update time: "+millisPerUpdate);
+	}
+	
+	public static void log(String string) {
+		log.error(string);
 	}
 }

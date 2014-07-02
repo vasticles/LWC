@@ -5,8 +5,12 @@
 package com.sbg.wickedtemplate.layers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.sbg.wickedtemplate.Group;
+import com.sbg.wickedtemplate.Resolver;
+import com.sbg.wickedtemplate.World;
 
 /**
 Abstract Layer class. Layer is responsible for holding groups. This is an earlier design, prior to json parsing.
@@ -26,10 +30,20 @@ public abstract class Layer {
 	public boolean enabled = true;
 	public float width = Gdx.graphics.getWidth();
 	public float height = Gdx.graphics.getHeight();
+	private OrthographicCamera camera;
+//	private World world;
+	private Resolver resolver;
+	private float parallax = 1;
 	
-	public Layer(int i) {
-		index=i;
-		opacity=100;
+	public Layer(int i, float p) {
+//		world = World.getWorld();
+		index = i;
+		parallax = p;
+		resolver = World.getResolver();
+//		opacity=100;
+		camera = new OrthographicCamera(width, height);
+		camera.setToOrtho(false, width, height);
+		camera.position.set(width/2, height/2, 0);
 	}
 	
 	public int getIndex() {
@@ -62,6 +76,19 @@ public abstract class Layer {
 	
 	public Group getGroup() {
 		return g;
+	}
+	
+	public void update() {
+		g.update();
+	}
+	
+	public void draw(SpriteBatch batch) {
+		camera.position.x = (width / 2) - resolver.getxPixelOffset()*parallax;
+		camera.update();
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		g.drawGroup(batch);
+		batch.end();
 	}
 	
 }

@@ -10,7 +10,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.sbg.wickedtemplate.effects.Effect;
+import com.sbg.wickedtemplate.Effect;
 
 /**
 Effects Adapter is a custom json serializer/deserializer for the abstract Effect class
@@ -39,7 +39,7 @@ public class EffectsAdapter implements JsonSerializer<Effect>,	JsonDeserializer<
 
 		try {
 			//path to class
-			return context.deserialize(element,	Class.forName("com.sbg.wickedtemplate.effects." + type));
+			return context.deserialize(element,	Class.forName("com.sbg.wickedtemplate.effects.sprite." + type));
 		} catch (ClassNotFoundException cnfe) {
 			throw new JsonParseException("Unknown element type: " + type, cnfe);
 		}

@@ -7,14 +7,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import com.sbg.wickedtemplate.Effect;
 import com.sbg.wickedtemplate.Group;
-import com.sbg.wickedtemplate.effects.Effect;
 import com.sbg.wickedtemplate.utils.EffectsAdapter;
 
 public class ForegroundEnergy extends Layer {
 
-	public ForegroundEnergy(int i) {
-		super(i);
+	public ForegroundEnergy(int i, float p) {
+		super(i,p);
 		
 		Reader configFile = Gdx.files.internal("data/ForegroundEnergy.json").reader();
 		

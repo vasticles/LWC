@@ -8,9 +8,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Matrix3;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.sbg.wickedtemplate.utils.Utils;
@@ -24,30 +24,45 @@ public class SpriteManager {
 	
 	private Group group;
 	private Array<ESprite> sprites;
-	private Array<Sprite> spritePool;
+	private Array<ESprite> spritePool;
 	private Array<Vector2> spawnPointPool;
 	private List<State> stateList;
 	private Random r = new Random();
+//	private String atlas = Assets.manager.get(Assets.atlasName);
 	
 	public SpriteManager(Group g) {
-		//useful to have group references, though maybe I encapsulate things better
+		//useful to have group references, though maybe I should encapsulate things betterr
 		group = g;
 		sprites = new Array<ESprite>();
 	}
 	
-	public void createSpritePool(String[] spriteNames, TextureAtlas atlas) {
-		if (spritePool == null) spritePool = new Array<Sprite>();
-		for (String spriteName : spriteNames) {
-			Sprite s = atlas.createSprite(spriteName);
+	public void createSpritePool(List<ESprite> spriteSpecs) {
+		if (spritePool == null) spritePool = new Array<ESprite>();
+		for (ESprite s : spriteSpecs) {
+			s.init(group);
+//			ESprite s = new ESprite(sprite);
+//			Sprite s = atlas.createSprite(spriteName);;
 			s.setOrigin(s.getWidth()/2, s.getHeight()/2);
+			s.setScale(group.mScreenRatio);
+			s.setSize(s.getRegionWidth(), s.getRegionHeight());
 			spritePool.add(s);
 		}
 	}
 	
+//	public void createSpritePooll(String[] spriteNames) {
+//		if (spritePool == null) spritePool = new Array<ESprite>();
+//		for (String spriteName : spriteNames) {
+//			Sprite s = atlas.createSprite(spriteName);
+//			s.setOrigin(s.getWidth()/2, s.getHeight()/2);
+//			spritePool.add(s);;
+//		}
+//	}
+	
 	public void createSpawnPointPool(float[][] spawnPointValues) {
 		if(spawnPointPool == null) spawnPointPool = new Array<Vector2>();
 		for(float[] value : spawnPointValues) {
-			spawnPointPool.add(new Vector2(Utils.percentToPixel(value[0], group.screenWidthPix), Utils.percentToPixel(value[1], group.screenHeightPix)));
+			Vector2 point = new Vector2(Utils.percentToPixel(value[0], group.mGroupWidthPix), Utils.percentToPixel(value[1], group.mGroupHeightPix)).scl(group.mScreenRatio).add(group.mGroupOffset);
+			spawnPointPool.add(point);
 		}
 	}
 	
@@ -63,46 +78,88 @@ public class SpriteManager {
 	}
 	
 	private Vector2 getRandomSpawnPoint() {
-		return spawnPointPool.get(r.nextInt(spawnPointPool.size));
+		Vector2 point = spawnPointPool.get(r.nextInt(spawnPointPool.size)).cpy();
+//		Utils.log("SP before matrix: "+point.toString());
+//		Utils.log(group.matrix.toString());
+		point.mul(group.matrix);
+//		Utils.log("SP after matrix: "+point.toString());
+//		Vector2 point = spawnPointPool.get(r.nextInt(spawnPointPool.size));/*.cpy().mul(group.matrix);*/
+//		Utils.log(group.matrix.toString());
+//		Utils.log("Point: "+point.toString());
+		return point;
 	}
+	
+//	public void translateSpawnPointss(Matrix3 matrix) {
+//		Utils.log(matrix.toString());
+//		for(Vector2 point : spawnPointPool) {
+//			point.set(point.cpy().mul(matrix));
+//			Utils.log(point.toString());
+//		}
+//	}
 	
 	private ESprite spawnRandomSprite() {
 		ESprite s = new ESprite(spritePool.get(r.nextInt(spritePool.size)), stateList);
 		Vector2 sP = getRandomSpawnPoint();
-		s.setPosition(sP.x-s.getWidth()/2, sP.y-s.getHeight()/2);
-		s.setAbsoluteXY(sP.x-s.getWidth()/2, sP.y-s.getHeight()/2);
-		s.setScale(group.mScreenRatio, group.mScreenRatio);
-		s.setX(s.getAbsoluteX()+group.parallax);
+//		Utils.log("SP before origin adj:"+sP.toString());
+//		s.setPosition(sP.x-s.getWidth()/2, sP.y-s.getHeight()/2);
+		s.setPosition(sP.x, sP.y);
+		s.setUnmodifiedPosition(sP.x, sP.y);
+//		Utils.log("S width:"+s.getWidth()+" S height: "+s.getHeight());
+//		Utils.log("SP after origin adj:"+s.getX()+","+s.getY());
 		return s;
 	}
 	
+	private boolean isOutsideOfGroup(ESprite s) {
+		Rectangle groupRec = group.getBoundingRectangle();
+		Rectangle spriteRec = s.getBoundingRectangle();
+//		Utils.log(groupRec.toString());
+//		Utils.log(spriteRec.toString());
+		float xmin = groupRec.x;
+		float xmax = xmin + groupRec.width;
 
-	public void update(long elapsedTime) {
+		float ymin = groupRec.y;
+		float ymax = ymin + groupRec.height;
+		return ((xmin > spriteRec.x + spriteRec.width) || (xmax < spriteRec.x))
+				|| ((ymin > spriteRec.y + spriteRec.height) || (ymax < spriteRec.y));
+//		return groupRec.contains(spriteRec);
+	}
+	
+//	private boolean contains (Rectangle rectangle) {
+//		float xmin = rectangle.x;
+//		float xmax = xmin + rectangle.width;
+//
+//		float ymin = rectangle.y;
+//		float ymax = ymin + rectangle.height;
+//
+//		return ((xmin > x && xmin < x + width) && (xmax > x && xmax < x + width))
+//			&& ((ymin > y && ymin < y + height) && (ymax > y && ymax < y + height));
+//	}
+	
+	public void update(float elapsedTime) {
 		//using iterator for safe removal of sprites when they expire
 		Iterator<ESprite> iter = sprites.iterator();
+//		Utils.startTimer();
 		while(iter.hasNext()) {
 			ESprite s = iter.next();
 			
-			//if this returns false, that means sprite expired and we have to remove it
-			if(!s.update(elapsedTime, group))
+			//a) sprite is outside of group bounds or b)sprite expired. Remove it from array.
+			if(isOutsideOfGroup(s) || !s.update(elapsedTime, group))
+//			if(!s.update(elapsedTime, group))
 				iter.remove();
 		}
+//		Utils.stopTimer("Lightning Sprites");
 		
-		//spawn a new sprite if there aren't enough
-		if(sprites.size < group.numOfSprites) {
+		//spawn new sprites if there aren't enough
+		int numOfSprites = group.getNumOfSprites();
+		while(sprites.size < numOfSprites) {
 			sprites.add(spawnRandomSprite());
 		}
 	}
-	
+
 	public void draw(SpriteBatch batch) {
 		for(ESprite s : sprites) {
 			//don't draw sprites if they are dead
 			if(s.phase != Phase.DEAD) {
-//				//debug
-//				if(group.name.equals("ForegroundEnergy") && s.phase == Phase.DEAD) {
-//					LWP_Engine.log.error("JUST DREW A DEAD SPRITE!");
-//					LWP_Engine.log.error("ID: "+s.id+" State: "+s.state.name+" Duration: "+s.state.duration+" Phase: "+s.state.phase.toString()/*" Position: "+sprite.getX()+", "+sprite.getY())*/);
-//				}
 				s.draw(batch);
 			}
 		}

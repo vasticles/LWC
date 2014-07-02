@@ -4,18 +4,16 @@
 
 package com.sbg.wickedtemplate;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import aurelienribon.tweenengine.Timeline;
-import aurelienribon.tweenengine.TweenManager;
-
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.google.gson.annotations.SerializedName;
-import com.sbg.wickedtemplate.effects.Effect;
+import com.sbg.wickedtemplate.utils.Utils;
 
 /**
 *This is an extended sprite class that adds custom functionality.
@@ -25,49 +23,102 @@ import com.sbg.wickedtemplate.effects.Effect;
  **/
 
 public class ESprite extends Sprite {
-	private Random r = new Random();
+	private Random random = new Random();
 	public int id; //ids are for debugging mainly
-	public float absoluteX; //these are used to properly add parallax
-	public float absoluteY;
+	public String name;
+	
+	//animation properties
+	public boolean isAnimated;
+	public String[] framesNames;
+	public float frameDuration;
+	public int playMode;
+	protected Array<TextureRegion> frames;
+	protected Animation anim;
+	protected float animationStateTime;
+	
+	//other properties
+	public float xScale;
+	public float yScale;
+	public float angle;
+	public float opacity;
+	private float rate;
+	private Vector2 velocity = new Vector2();
+	protected Vector2 tmpVect = new Vector2();
+	protected Vector2 unmodifiedPosition = new Vector2();
+	protected Vector2 oldPos = new Vector2();
 	private Group group;
 	public Phase phase;
 	public State state;
 	public Effect effect;
 	private StateManager stateManager;
+	public String atlasFilename;
 
+	public ESprite() {}
+	
 	public ESprite(Sprite spr) {
 		super(spr);
-		setAbsoluteXY(getX(), getY());
 	}
 	
-	public ESprite(Sprite spr, List<State> spriteStates) {
+	public ESprite(ESprite spr, List<State> spriteStates) {
 		super(spr);
-		id = r.nextInt(100);
+		id = random.nextInt(100);
+		isAnimated = spr.isAnimated;
+		if(isAnimated) {
+			anim = spr.anim;
+			frames = spr.frames;
+			frameDuration = spr.frameDuration;
+			playMode = spr.playMode;
+			animationStateTime = 0f;
+//			setRegion(frames.first());
+		}
+//		setScale(xScale, yScale);
+//		setRotation(angle);
+//		setColor(getColor().r, getColor().g, getColor().b, opacity/100);
 		//create state manager and give it the list of states
 		stateManager = new StateManager(this, spriteStates);
 	}
 	
-	public void setAbsoluteX(float x) {
-		absoluteX=x;
+	//initialize animation here instead of constructor to save cpu cycles
+	public void init(Group group) {
+		TextureAtlas atlas;
+		if(atlasFilename != null)
+			atlas = Assets.getAtlas(atlasFilename);
+		else
+			atlas = Assets.getAtlas(group.groupAtlas);
+		frames = new Array<TextureRegion>();
+		for(String frameName : framesNames) {
+			frames.add(atlas.findRegion(frameName));
+		}
+		if(isAnimated) {
+			anim = new Animation(frameDuration, frames, playMode);
+		}
+		setRegion(frames.first());
+//		setSize(getRegionWidth(), getRegionHeight());
 	}
 	
-	public void setAbsoluteY(float y) {
-		absoluteY=y;
+	//this is a ghetto method that creates a vector to hold the original coords for the sprite position
+	//unmodified by the matrix, but post global scale
+	//we need this vector, because we will apply the everchanging matrix to it
+	public void setUnmodifiedPosition(float x, float y) {
+//		Utils.log("Group X: "+x+" Group Y: "+y);
+		unmodifiedPosition.set(x, y);
+//		Utils.log(unmodifiedPosition.toString());
 	}
 	
-	public void setAbsoluteXY(float x, float y) {
-		setAbsoluteX(x);
-		setAbsoluteY(y);
+	public void setVelocity(float angle, float rate) {
+		this.rate = rate;
+//		Utils.log(rate+"")
+		velocity.set(rate, 0).setAngle(angle);
 	}
 	
-	public float getAbsoluteX() {
-		return absoluteX;
+	public float getAngle() {
+		return velocity.angle();
 	}
 	
-	public float getAbsoluteY() {
-		return absoluteY;
+	public float getRate() {
+		return rate;
 	}
-
+	
 	public Group getGroup() {
 		return group;
 	}
@@ -91,16 +142,26 @@ public class ESprite extends Sprite {
 	public StateManager getStateManager() {
 		return stateManager;
 	}
-
-	public boolean update(long elapsedTime, Group group) {
-		//dirty way of getting the sprite's group reference. I was debugging and I oughtta clean this up
+	
+	public boolean update(float elapsedTime, Group group) {
 		this.group = group;
 		
-		setX(getAbsoluteX()+group.parallax);
-		setY(getAbsoluteY()); //not really necessary I suppose
+		if(isAnimated) {
+			animationStateTime+=elapsedTime;
+			setRegion(anim.getKeyFrame(animationStateTime));
+		}
 		
-//		LWP_Engine.log.error("Sprite id: "+id);
-		
+//		tmpVect.set(unmodifiedPosition).mul(group.matrix);
+		tmpVect.set(velocity.x*elapsedTime, velocity.y*elapsedTime);
+		Vector2 newPos = unmodifiedPosition.cpy().mul(group.matrix);
+//		Utils.log(group.matrix.toString());
+//		Utils.log(newPos.toString());
+		setPosition(newPos.x, newPos.y);
+		translate(tmpVect.x, tmpVect.y);
+//		unmodifiedPosition.set(getX(), getY());
+//		Utils.log(tmpVect.toString());
+//		Utils.log(unmodifiedPosition.toString());
+
 		//update states
 		return stateManager.update(elapsedTime);
 	}

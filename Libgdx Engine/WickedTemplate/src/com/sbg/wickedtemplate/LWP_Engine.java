@@ -20,7 +20,6 @@ public class LWP_Engine implements ApplicationListener {
 	public static Logger log;
 //	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private Texture texture;
 	Sprite sprite;
 	
 	//Vas changes
@@ -31,9 +30,10 @@ public class LWP_Engine implements ApplicationListener {
 	public static float height;
 	
 	private long diff, start;
-	private final float targetFPS = 30f; // 20-30 is enough
+	public final static float targetFPS = 30f; // 20-30 is enough
 	private final long targetDelay = 1000 / (long) targetFPS;
 	private FPSLogger fpslog;
+	public static boolean isFirstLaunch = true;
 	
 	
 	//Set up global fields and create world
@@ -50,19 +50,14 @@ public class LWP_Engine implements ApplicationListener {
 		wr = new WorldRenderer(world);
 		world.setRenderer(wr);
 		
-//		camera = new OrthographicCamera(1, h/w);
+//		camera = new OrthographicCamera(width, height);
+//		camera.setToOrtho(false, width, height);
+//		camera.position.set(width/2, height/2, 0);
 		
 		//SpriteBatch is the underlying object responsible for drawing
 		batch = new SpriteBatch();
-//		batch.enableBlending();
+//		Gdx.graphics.setContinuousRendering(false);
 		
-//		texture = new Texture(Gdx.files.internal("data/goku.png"));
-//		TextureRegion region = new TextureRegion(texture, 0, 0, 512, 275);
-		
-//		sprite = new Sprite(texture);
-//		sprite.setSize(500, 500);
-//		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
-//		sprite.setPosition(0,0);
 	}
 
 	
@@ -70,7 +65,7 @@ public class LWP_Engine implements ApplicationListener {
 	@Override
 	public void dispose() {
 		batch.dispose();
-		if (texture!=null) texture.dispose();
+		if (world!=null) world.dispose();
 	}
 
 	
@@ -79,24 +74,20 @@ public class LWP_Engine implements ApplicationListener {
 	public void render() {		
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
-//		batch.setProjectionMatrix(camera.combined);
-//		sprite.setColor(1, 1, 1, 0.5f);
-
 		//Update the physics before drawing
 		world.update();
+		//		camera.position.x = (width / 2) - resolver.getxPixelOffset();
+		//		camera.update();
+		//		batch.setProjectionMatrix(camera.combined);
 		//Tell the spritebatch that we're ready to draw
-		batch.begin();
+		//		batch.begin();
 		//Propagate drawing calls throughout the world via the attached world renderer
 		wr.render(batch);
-//		sprite.draw(batch);
-//		batch.draw(sprite.getTexture(), sprite.getX()+0, sprite.getY(), sprite.getOriginX(), 0, sprite.getWidth(), sprite.getHeight(), 1, 1, 0, sprite.getRegionX(), sprite.getRegionY(), sprite.getRegionWidth(), sprite.getRegionHeight(), false, false);
 		//Tell spritebatch that we're done
-		batch.end();
-		
+		//		batch.end();
 		//Sleep thread as per FPS
 		limitFPS();
-		fpslog.log();
+//		fpslog.log();
 	}
 
 	//This method updates the global width and height in case user rotated the device

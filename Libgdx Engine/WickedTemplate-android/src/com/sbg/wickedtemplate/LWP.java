@@ -17,7 +17,7 @@ public class LWP extends AndroidLiveWallpaperService {
         super.onCreateApplication();
 
         final AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-        config.useGL20 = true;
+        config.useGL20 = false;
         config.useCompass = false;
         config.useWakelock = false;
         config.useAccelerometer = false;

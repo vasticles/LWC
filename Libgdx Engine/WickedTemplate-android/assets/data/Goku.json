@@ -8,26 +8,28 @@
   "groupY": 0,
   "mParallaxFactor": 0.5,
   "atlasPath": "data/wicked_template.txt",
-  "spriteNames": [
-    "goku"
-  ],
+  "spriteNames": ["goku"],
   "spriteOriginX": 50,
   "spriteOriginY": 50,
-  "spawnPointsValues": [
-    [
-      38,
-      42.1
-    ]
-  ],
-  "numOfSpritesRange": [
-    1
-  ],
+  "spawnPointsValues": [[38,42.1]],
+  "numOfSpritesRange": [1],
   "mStretched": false,
   "stateList": [
   			{"name": "STATE A",
   			 "phase": "eternal",
-  			 "effectsList": [{"class_name": "NoEffect",
-  			 			  "properties": {"effect_name": "no_effect", "startDelay": 0, "duration": 10, "endPause": 0, "startValue": 0, "endValue": 0, "repeat": false, "yoyo": false, "reps": 0, "repDelay": 0}}
-  			 			]
+  			 "effectsList": [
+  			 			{"class_name": "NoEffect",
+  			 			 "properties": {
+  			 			 	"effect_name": "no_effect", 
+  			 			 	"startDelay": 0, 
+  			 			 	"duration": 10, 
+  			 			 	"endPause": 0, 
+  			 			 	"startValue": 0, 
+  			 			 	"endValue": 0, 
+  			 			 	"repeat": false, 
+  			 			 	"yoyo": false, 
+  			 			 	"reps": 0, 
+  			 			 	"repDelay": 0}
+  			 			}]
   			}]
 }
