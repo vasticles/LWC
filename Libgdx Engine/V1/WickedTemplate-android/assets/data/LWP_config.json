@@ -1,0 +1,18 @@
+{
+  "name": "TEST WP",
+  "isScrollable": true,
+  "atlasMeta": [{"name": "World",
+  			   	 "filePath": "gfx/wicked_template.txt",
+  			   	 "isDisabled": false},
+  			  	{"name": "Gohan",
+  			   	 "filePath": "gfx/gohan.txt",
+  			     "isDisabled": false}],
+  "groupMeta": [{"name": "Background",
+  			     "filePath": "data/Background.json",
+  			  	 "isDisabled": true,
+  			  	 "index": 0},
+  			    {"name": "ForegroundEnergy",
+  			  	 "filePath": "data/ForegroundEnergy.json",
+  			  	 "isDisabled": false,
+  			  	 "index": 1}]
+}

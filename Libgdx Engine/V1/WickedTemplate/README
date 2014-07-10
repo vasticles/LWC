@@ -1,0 +1,77 @@
+/** Wicked Template Version 1.0.0
+ * Copyright 2014 Vassili Nesterov
+ * 
+ * Supports single static groups per layer. Each group can have a static or animated background. Each group can also 
+ * have a user-specified number of sprites. Sprites can have their properties animated as well. So far a sprite supports 
+ * position, opacity, velocity, scale and rotation. Sprites can also have frame animations (like gifs). All animations 
+ * (except frame animation) can be programmed with the use of effects.
+ * 
+ * An effect is how you define an animation - by specifying the desired values for the required fields. Most effects
+ * require the following to be specified: name of animation, duration(s), delay(s) (at start or end), start and end values,
+ * number of repetitions, the repetition style, and delay between reps. Any time-based values use seconds for units.
+ * Some effects have more than one required value (position or velocity). Values can be linked/paired as follows:
+ * Start to End (for singular values); Start A to Start B or End A to End B (position coordinates), or all pairs (this
+ * pairs all values respectively). Some other combinations are also possible. If you don't need an effect, but simply
+ * want to use up some time (instead of using a delay/pause), there is a blank No Effect available. All numerical
+ * fields support multiple values.
+ * 
+ * Effects are applied using a tween engine. This means that the property is animated from start value to end value in
+ * the specified time using a smooth easing function. I call this tween mode incremental. You can also choose a constant
+ * mode. This will use the end value as the constant value and the tweening will be uniform throughout the effect's duration.
+ * 
+ * Effects can be performed sequentially as well as simultaneously. All effects are "children" of states. All of sprite's
+ * effects are managed by the states that they belong to. A sprite can have as many states as you want. A state can have
+ * as many effects as you want. Simply put, effects comprise states, and states comprise sprite behaviour.
+ * 
+ * The idea behind states is to allow the user to label sprites' behaviours. For example, to have a sprite move right
+ * and jump, a user can make a state and call it "Move right and jump". This state would have 2 effects: Position (to move)
+ * and Velocity (to jump). States allow you to combine the basic effects to achieve more advanced effects, thereby dictating
+ * the behaviour of the sprite throughout its lifetime.
+ * 
+ * All sprites have phases. There are only 5 phases at the moment: SPAWNING, ALIVE, DYING, DEAD and ETERNAL.
+ * Phases determine whether the sprite gets drawn or not and for how long. It is up to the user to assign which phase
+ * a state should be associated with. When the sprite is in the DEAD phase, it is no longer drawn. This acts as the 
+ * respawn timer. So if you want your sprites to respawn 5 seconds after death, you set the state associated with the
+ * DEAD phase to 5 seconds. ETERNAL phase is intended for static sprites that never die or respawn. For DEAD and ETERNAL
+ * phases, you should use the No Effect placeholder with the associated state.
+ * 
+ * Effects that are a part of the same state are executed simultaneously. If you want sequential execution, simply
+ * create more states.
+ * 
+ * All positional values are measured in percentages of the screen's real estate.
+ * 
+ * All graphics need to be packaged into a texture atlas. If you want to use a gif/frame animations, you have to include
+ * each frame of the animation into the texture atlas. If the animation is large in dimensions and has lots of frames,
+ * you can package it into a separate atlas and specify the name of the atlas when defining the sprite. Beware that
+ * the more assets you pack, and the bigger they are, the longer it will take to load the wallpaper, and the larger the 
+ * memory footprint will be. If you are using jpgs, make sure you don't save them as "progressive".
+ * 
+ * A group spawns its sprites at the specified spawn points. Spawn point values are relevant to the group. So if you say
+ * 50,50, it will spawn in the middle of the group, regardless of where the group itself may be positioned. The spawn anchor
+ * is always the bottom left of the sprite's rectangular bounding box.
+ *
+ * Sprites die as they make it through their lifetime. Sprites also die if they exit the group. This version only supports
+ * one type of group exit: when the sprite has left the group bounds entirely. This means that if half the sprite is outside
+ * the group, and the other half is inside - the sprite is still alive and will be drawn accordingly. Clipping is not
+ * yet supported. 
+ * 
+ * In this version, sprite states are a global group field. This means that all sprites in a group will inherit the set of
+ * states that was specified for the group in the configuration. It's not yet allowed to give certain sprites in a group
+ * a custom set of states that is different from the other sprites in the group. Simply create a separate group if you want
+ * this functionality.
+ * 
+ * Groups can have a parallax factor. This defines how fast or slow the groups scroll when the end-user swipes the screen.
+ * Give your groups different parallaxes to add depth to your wallpapers :)
+ * 
+ * Groups and their children can also be scaled up or down. Set the value in percentages. 
+ * 
+ * Finally, groups are held by layers in this version. A layer at the moment only holds one group. Create more layers to add 
+ * more groups. It may seem redundant at the time, and it is possible that it will change in the future, however layers are
+ * meant to be organizational units that may allow for global modifications (once they can hold more than one group).
+ * 
+ * A wallpaper can be set to be scrollable or not. If it is scrollable, then the width of the screen's real estate is
+ * doubled.
+ *
+ *****************THINGS TO KEEP IN MIND/BUGS**********************
+ * 
+ **/
