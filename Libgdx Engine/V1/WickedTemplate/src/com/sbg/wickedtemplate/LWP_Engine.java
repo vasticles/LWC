@@ -97,7 +97,7 @@ public class LWP_Engine implements ApplicationListener {
 	//Main render loop
 	@Override
 	public void render() {		
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		//Update the physics before drawing
 		world.update();

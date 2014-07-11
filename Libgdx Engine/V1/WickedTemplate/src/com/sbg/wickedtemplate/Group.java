@@ -11,6 +11,7 @@ import aurelienribon.tweenengine.Tween;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
@@ -50,7 +51,6 @@ public class Group extends ESprite {
 	public ESprite bgSprite;
 	public List<State> bgSpriteStates;
 	public String spriteNames[];
-	public boolean stretched;
 	public int numOfSpritesRange[]; //range of number of sprites that can be active in the group
 	public int numOfSprites = 0;
 	public Array<Vector2> spawnPoints; 
@@ -78,9 +78,17 @@ public class Group extends ESprite {
 		if(isScrollable) screenWidthPix*=2;
 		
 		//prepares the sprite object that holds our data. specifically the texture or animation
-		bgSprite.prepareGraphic(this);
-		//set region to the first (and only, if not applicable) frame
-		setGroupGraphic(bgSprite);
+		if(!bgSprite.isDisabled) {
+			bgSprite.prepareGraphic(this);
+			//set region to the first (if there are more than one) frame
+			setGroupGraphic(bgSprite);
+		}
+		else {
+//			bgSprite = new ESprite(new Sprite());
+			isDisabled = bgSprite.isDisabled;
+			//make it transparent
+			setColor(0, 0, 0, 0);
+		}
 		//converts stored dimensions in % to pixels and stores them (width,height)
 		setGroupPixelDimensions();
 		//scales group by the scale factor
@@ -206,7 +214,7 @@ public class Group extends ESprite {
 	}
 	
 	public void drawGroup(SpriteBatch batch) {
-		this.draw(batch);
+		if(!isDisabled) this.draw(batch);
 		spriteManager.draw(batch);
 	}
 	

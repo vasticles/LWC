@@ -57,6 +57,10 @@ public class ESprite extends Sprite {
 
 	public ESprite() {}
 	
+	public ESprite(Sprite spr) {
+		super(spr);
+	}
+	
 	public ESprite(ESprite spr) {
 		super(spr);
 		name = spr.name;
