@@ -6,7 +6,6 @@ package com.sbg.wickedtemplate;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import com.sbg.wickedtemplate.layers.Layer;
 
 /**
 World Renderer is responsible for drawing the world.

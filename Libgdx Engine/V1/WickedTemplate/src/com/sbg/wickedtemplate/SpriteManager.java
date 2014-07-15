@@ -27,7 +27,8 @@ public class SpriteManager {
 	private Array<ESprite> spritePool;
 	private Array<Vector2> spawnPointPool;
 	private List<State> stateList;
-	private Random r = new Random();
+	private Random r = Utils.getRandom();
+	private boolean isSpawnRandom = false;
 //	private String atlas = Assets.manager.get(Assets.atlasName);
 	
 	public SpriteManager(Group g) {
@@ -48,9 +49,18 @@ public class SpriteManager {
 		}
 	}
 	
-	public void createSpawnPointPool(float[][] spawnPointValues) {
+	public void createSpawnPointPool(String[] spawnPointValues) {
+		//no need for spawnpoint pool if it's random
+		if(spawnPointValues[0].equalsIgnoreCase("random")) {
+			isSpawnRandom = true;
+			return;
+		}
+		//create array to hold predefined spawn points
 		if(spawnPointPool == null) spawnPointPool = new Array<Vector2>();
-		for(float[] value : spawnPointValues) {
+		//convert string array to 2d float array
+		float[][] values = Utils.stringArrToTwoDimFloatArr(spawnPointValues);
+		//fill up the new array
+		for(float[] value : values) {
 			Vector2 point = new Vector2(Utils.percentToPixel(value[0], group.mGroupWidthPix), Utils.percentToPixel(value[1], group.mGroupHeightPix)).scl(group.mScreenRatio).add(group.getOffset());
 			spawnPointPool.add(point);
 		}
@@ -68,7 +78,13 @@ public class SpriteManager {
 	}
 	
 	private Vector2 getRandomSpawnPoint() {
-		Vector2 point = spawnPointPool.get(r.nextInt(spawnPointPool.size)).cpy();
+		Vector2 point;
+		if(isSpawnRandom) {
+			float x = r.nextFloat() * (group.mGroupWidthPix - 0) + 0;
+			float y = r.nextFloat() * (group.mGroupWidthPix - 0) + 0;
+			point = new Vector2(x, y).add(group.getOffset());
+		} else 
+			point = spawnPointPool.get(r.nextInt(spawnPointPool.size)).cpy();
 		return point;
 	}
 	

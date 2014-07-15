@@ -54,7 +54,8 @@ public class Group extends ESprite {
 	public int numOfSpritesRange[]; //range of number of sprites that can be active in the group
 	public int numOfSprites = 0;
 	public Array<Vector2> spawnPoints; 
-	public float spawnPointsValues[][]; //2D array that will be used to construct vector spawn points
+//	public float spawnPointsValues[][]; //2D array that will be used to construct vector spawn points
+	public String spawnPointsValues[]; //array that will be used to construct vector spawn points. can be "random"
 	private Random r = new Random();
 	public float scaleFactorPercent; //scale factor that should be applied to the sprites (optimization needed)
 	public List<State> stateList; //list of states that will be passed to each sprite upon construction

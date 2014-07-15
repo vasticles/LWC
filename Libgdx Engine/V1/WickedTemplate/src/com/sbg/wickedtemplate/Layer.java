@@ -2,7 +2,7 @@
  * Copyright 2014 Vas Nesterov
  */
 
-package com.sbg.wickedtemplate.layers;
+package com.sbg.wickedtemplate;
 
 import java.io.Reader;
 
@@ -15,11 +15,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.sbg.wickedtemplate.Effect;
-import com.sbg.wickedtemplate.Group;
-import com.sbg.wickedtemplate.LWP_Engine;
-import com.sbg.wickedtemplate.Resolver;
-import com.sbg.wickedtemplate.World;
 import com.sbg.wickedtemplate.utils.EffectsAdapter;
 
 /**

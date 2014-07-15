@@ -1,0 +1,20 @@
+{
+  "name": "TEST WP",
+  "isScrollable": true,
+  "atlasMeta": [{"name": "World",
+  			   	 "filePath": "gfx/atlas.txt",
+  			   	 "isDisabled": false}],
+  "groupMeta": [{"name": "Background",
+  			     "filePath": "data/Background.json",
+  			  	 "isDisabled": false,
+  			  	 "index": 0},
+  			  	{"name": "ParallaxA",
+  			     "filePath": "data/ParallaxA.json",
+  			  	 "isDisabled": true,
+  			  	 "index": 1},
+  			  	{"name": "ParallaxB",
+  			     "filePath": "data/ParallaxB.json",
+  			  	 "isDisabled": true,
+  			  	 "index": 2}
+  			   ]
+}

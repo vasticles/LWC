@@ -75,4 +75,15 @@ public class Utils {
 	public static void log(String string) {
 		log.error(string);
 	}
+	
+	public static float[][] stringArrToTwoDimFloatArr(String[] array) {
+		float[][] newArr = new float[array.length][array.length];
+		int ind = 0;
+		for(String val : array) {
+			newArr[ind][0] = Float.parseFloat(val.split(",")[0]);
+			newArr[ind][1] = Float.parseFloat(val.split(",")[1]);
+			ind++;
+		}
+		return newArr;
+	}
 }
