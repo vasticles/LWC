@@ -2,38 +2,31 @@ atlas.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-bluecircle
+yellowcircle1
   rotate: false
-  xy: 2, 410
-  size: 100, 100
-  orig: 100, 100
+  xy: 2, 267
+  size: 264, 263
+  orig: 264, 263
   offset: 0, 0
   index: -1
-greencircle
+yellowcircle2
   rotate: false
-  xy: 2, 308
-  size: 100, 100
-  orig: 100, 100
+  xy: 534, 2
+  size: 264, 263
+  orig: 264, 263
   offset: 0, 0
   index: -1
-redsquare
+yellowcircle3
   rotate: false
-  xy: 2, 206
-  size: 100, 100
-  orig: 100, 100
+  xy: 268, 2
+  size: 264, 263
+  orig: 264, 263
   offset: 0, 0
   index: -1
-whitesquare
-  rotate: false
-  xy: 2, 104
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-yellowsquare
+yellowcircle4
   rotate: false
   xy: 2, 2
-  size: 100, 100
-  orig: 100, 100
+  size: 264, 263
+  orig: 264, 263
   offset: 0, 0
   index: -1

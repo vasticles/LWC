@@ -28,8 +28,7 @@ public class SpriteManager {
 	private Array<Vector2> spawnPointPool;
 	private List<State> stateList;
 	private Random r = Utils.getRandom();
-	private boolean isSpawnRandom = false;
-//	private String atlas = Assets.manager.get(Assets.atlasName);
+	private SpawnMode spawnMode;
 	
 	public SpriteManager(Group g) {
 		//useful to have group references, though maybe I should encapsulate things better
@@ -49,12 +48,11 @@ public class SpriteManager {
 		}
 	}
 	
+	public void setSpawnMode(SpawnMode mode) {
+		spawnMode = mode;
+	}
+	
 	public void createSpawnPointPool(String[] spawnPointValues) {
-		//no need for spawnpoint pool if it's random
-		if(spawnPointValues[0].equalsIgnoreCase("random")) {
-			isSpawnRandom = true;
-			return;
-		}
 		//create array to hold predefined spawn points
 		if(spawnPointPool == null) spawnPointPool = new Array<Vector2>();
 		//convert string array to 2d float array
@@ -71,27 +69,60 @@ public class SpriteManager {
 	}
 	
 	public void prepareSprites() {
-		int numOfSprites = group.getNumOfSprites();
-		for(int i=1; i<=numOfSprites; i++) {
-			sprites.add(spawnRandomSprite());
+		if(spawnMode != SpawnMode.NONE) {
+			int numOfSprites = group.getNumOfSprites();
+			for(int i=1; i<=numOfSprites; i++) {
+				sprites.add(spawnRandomSprite());
+			}
 		}
 	}
 	
-	private Vector2 getRandomSpawnPoint() {
+	private Vector2 getSpawnPoint() {
 		Vector2 point;
-		if(isSpawnRandom) {
-			float x = r.nextFloat() * (group.mGroupWidthPix - 0) + 0;
-			float y = r.nextFloat() * (group.mGroupWidthPix - 0) + 0;
+		float x,y;
+		switch (spawnMode) {
+		case RANDOM:
+			x = r.nextFloat() * (group.mGroupWidthPix - 0) + 0;
+			y = r.nextFloat() * (group.mGroupWidthPix - 0) + 0;
 			point = new Vector2(x, y).add(group.getOffset());
-		} else 
+			break;
+		case BORDER_BOTTOM:
+			x = r.nextFloat() * (group.mGroupWidthPix - 0) + 0;
+			y = 0;
+			point = new Vector2(x, y).add(group.getOffset());
+			break;
+		case BORDER_TOP:
+			x = r.nextFloat() * (group.mGroupWidthPix - 0) + 0;
+			y = group.mGroupHeightPix;
+			point = new Vector2(x, y).add(group.getOffset());
+			break;
+		case BORDER_LEFT:
+			x = 0;
+			y = r.nextFloat() * (group.mGroupHeightPix - 0) + 0;
+			point = new Vector2(x, y).add(group.getOffset());
+			break;
+		case BORDER_RIGHT:
+			x = group.mGroupWidthPix;
+			y = r.nextFloat() * (group.mGroupHeightPix - 0) + 0;
+			point = new Vector2(x, y).add(group.getOffset());
+			break;
+		case CUSTOM:
 			point = spawnPointPool.get(r.nextInt(spawnPointPool.size)).cpy();
+			break;
+		//default is random
+		default:
+			x = r.nextFloat() * (group.mGroupWidthPix - 0) + 0;
+			y = r.nextFloat() * (group.mGroupWidthPix - 0) + 0;
+			point = new Vector2(x, y).add(group.getOffset());
+			break;
+		}
 		return point;
 	}
 	
 	
 	private ESprite spawnRandomSprite() {
 		ESprite s = new ESprite(spritePool.get(r.nextInt(spritePool.size)));
-		Vector2 sP = getRandomSpawnPoint();
+		Vector2 sP = getSpawnPoint();
 //		s.setUnconstrainedPosition(sP.x, sP.y);
 		s.setPosition(sP.x, sP.y);
 //		Utils.log("SpawnPoint set: "+s.getX()+","+s.getY());
@@ -118,7 +149,6 @@ public class SpriteManager {
 	public void update(float elapsedTime) {
 		//using iterator for safe removal of sprites when they expire
 		Iterator<ESprite> iter = sprites.iterator();
-//		Utils.startTimer();
 		while(iter.hasNext()) {
 			ESprite s = iter.next();
 //			Utils.log("Sprite ID: "+s.id+" Current pos: "+s.getX()+", "+s.getY());
@@ -129,15 +159,16 @@ public class SpriteManager {
 			
 //			Utils.log("Sprite ID: "+s.id+" Updated pos: "+s.getX()+", "+s.getY());
 		}
-//		Utils.stopTimer("Lightning Sprites");
 		
 		//spawn new sprites if there aren't enough
-		int numOfSprites = group.getNumOfSprites();
-		while(sprites.size < numOfSprites) {
-			ESprite s = spawnRandomSprite();
-//			Utils.log("Sprite ID: "+s.id+" Actual position(SM): "+s.getX()+", "+s.getY());
-			sprites.add(s);
-//			sprites.add(spawnRandomSprite());
+		if(spawnMode != SpawnMode.NONE) {
+			int numOfSprites = group.getNumOfSprites();
+			while(sprites.size < numOfSprites) {
+				ESprite s = spawnRandomSprite();
+	//			Utils.log("Sprite ID: "+s.id+" Actual position(SM): "+s.getX()+", "+s.getY());
+				sprites.add(s);
+	//			sprites.add(spawnRandomSprite());
+			}
 		}
 	}
 

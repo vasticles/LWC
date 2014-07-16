@@ -1,0 +1,130 @@
+gohan.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+gohan1
+  rotate: false
+  xy: 3470, 1028
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan10
+  rotate: false
+  xy: 2892, 1028
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan11
+  rotate: false
+  xy: 2314, 1028
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan12
+  rotate: false
+  xy: 1736, 2054
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan13
+  rotate: false
+  xy: 1736, 1028
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan14
+  rotate: false
+  xy: 1158, 2054
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan15
+  rotate: false
+  xy: 1158, 1028
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan16
+  rotate: false
+  xy: 3470, 2
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan17
+  rotate: false
+  xy: 2892, 2
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan18
+  rotate: false
+  xy: 2314, 2
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan2
+  rotate: false
+  xy: 1736, 2
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan3
+  rotate: false
+  xy: 1158, 2
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan4
+  rotate: false
+  xy: 580, 2054
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan5
+  rotate: false
+  xy: 580, 1028
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan6
+  rotate: false
+  xy: 580, 2
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan7
+  rotate: false
+  xy: 2, 2054
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan8
+  rotate: false
+  xy: 2, 1028
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1
+gohan9
+  rotate: false
+  xy: 2, 2
+  size: 576, 1024
+  orig: 576, 1024
+  offset: 0, 0
+  index: -1

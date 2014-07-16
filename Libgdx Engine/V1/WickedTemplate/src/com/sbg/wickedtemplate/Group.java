@@ -55,6 +55,7 @@ public class Group extends ESprite {
 	public int numOfSprites = 0;
 	public Array<Vector2> spawnPoints; 
 //	public float spawnPointsValues[][]; //2D array that will be used to construct vector spawn points
+	public SpawnMode spawnMode;
 	public String spawnPointsValues[]; //array that will be used to construct vector spawn points. can be "random"
 	private Random r = new Random();
 	public float scaleFactorPercent; //scale factor that should be applied to the sprites (optimization needed)
@@ -83,9 +84,7 @@ public class Group extends ESprite {
 			bgSprite.prepareGraphic(this);
 			//set region to the first (if there are more than one) frame
 			setGroupGraphic(bgSprite);
-		}
-		else {
-//			bgSprite = new ESprite(new Sprite());
+		} else {
 			isDisabled = bgSprite.isDisabled;
 			//make it transparent
 			setColor(0, 0, 0, 0);
@@ -108,8 +107,12 @@ public class Group extends ESprite {
 		spriteManager = new SpriteManager(this);
 		//create a pool of sprites from the deserialized list of sprite configs
 		spriteManager.createSpritePool(spriteSpecs);
-		//create a pool of spawn points from the deserialized array of spawn point values
-		spriteManager.createSpawnPointPool(spawnPointsValues);
+		//tell sprite manager what the spawn mode is
+		spriteManager.setSpawnMode(spawnMode);
+		if(spawnMode == SpawnMode.CUSTOM) {
+			//create a pool of spawn points from the deserialized array of spawn point values
+			spriteManager.createSpawnPointPool(spawnPointsValues);
+		}
 		//create a list of sprite states from the deserialized list of state configs
 		spriteManager.createSpriteStateList(stateList);
 		//fill up the array with sprites

@@ -1,0 +1,23 @@
+{
+  "name": "TEST WP",
+  "isScrollable": false,
+  "atlasMeta": [{"name": "World",
+  			   	 "filePath": "gfx/atlas.txt",
+  			   	 "isDisabled": true},
+  			   	{"name": "Gohan",
+  			   	 "filePath": "gfx/gohan.txt",
+  			   	 "isDisabled": false}],
+  "groupMeta": [{"name": "Background",
+  			     "filePath": "data/Background.json",
+  			  	 "isDisabled": true,
+  			  	 "index": 0},
+  			  	{"name": "Gohan",
+  			     "filePath": "data/Gohan.json",
+  			  	 "isDisabled": false,
+  			  	 "index": 1},
+  			  	{"name": "ParallaxB",
+  			     "filePath": "data/ParallaxB.json",
+  			  	 "isDisabled": true,
+  			  	 "index": 2}
+  			   ]
+}

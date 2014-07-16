@@ -121,7 +121,8 @@ public class Layer {
 	
 	public void draw(SpriteBatch batch) {
 		if(resolver == null) resolver = World.getResolver();
-		camera.position.x = width/2 - resolver.getxPixelOffset()*parallax;
+		if(!LWP_Engine.isScrollable) camera.position.x = width/2;
+		else camera.position.x = width/2 - resolver.getxPixelOffset()*parallax;
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
