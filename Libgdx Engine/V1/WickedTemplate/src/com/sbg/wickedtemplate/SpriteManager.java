@@ -29,6 +29,7 @@ public class SpriteManager {
 	private List<State> stateList;
 	private Random r = Utils.getRandom();
 	private SpawnMode spawnMode;
+	private Alignment spriteAlignment;
 	
 	public SpriteManager(Group g) {
 		//useful to have group references, though maybe I should encapsulate things better
@@ -50,6 +51,10 @@ public class SpriteManager {
 	
 	public void setSpawnMode(SpawnMode mode) {
 		spawnMode = mode;
+	}
+	
+	public void setSpriteAlignment(Alignment alignment) {
+		spriteAlignment = alignment;
 	}
 	
 	public void createSpawnPointPool(String[] spawnPointValues) {
@@ -119,10 +124,47 @@ public class SpriteManager {
 		return point;
 	}
 	
+	private void alignSpawnPoint(Vector2 point, Alignment alignment, ESprite s) {
+		switch(alignment) {
+		case BOTTOM_LEFT:
+			break;
+		case BOTTOM_MIDDLE:
+			point.sub(s.getWidth()/2, 0);
+			break;
+		case BOTTOM_RIGHT:
+			point.sub(s.getWidth(), 0);
+			break;
+		case CENTRE:
+			point.sub(s.getWidth()/2, s.getHeight()/2);
+			break;
+		case MIDDLE_LEFT:
+			point.sub(0, s.getHeight()/2);
+			break;
+		case MIDDLE_RIGHT:
+			point.sub(s.getWidth(), s.getHeight()/2);
+			break;
+		case TOP_LEFT:
+			point.sub(0, s.getHeight());
+			break;
+		case TOP_MIDDLE:
+			point.sub(s.getWidth()/2, s.getHeight());
+			break;
+		case TOP_RIGHT:
+			point.sub(s.getWidth(), s.getHeight());
+			break;
+		default:
+			break;
+		}
+	}
+	
 	
 	private ESprite spawnRandomSprite() {
 		ESprite s = new ESprite(spritePool.get(r.nextInt(spritePool.size)));
 		Vector2 sP = getSpawnPoint();
+		if(s.alignment != null)
+			alignSpawnPoint(sP, s.alignment, s);
+		else
+			alignSpawnPoint(sP, spriteAlignment, s);
 //		s.setUnconstrainedPosition(sP.x, sP.y);
 		s.setPosition(sP.x, sP.y);
 //		Utils.log("SpawnPoint set: "+s.getX()+","+s.getY());
@@ -154,7 +196,10 @@ public class SpriteManager {
 //			Utils.log("Sprite ID: "+s.id+" Current pos: "+s.getX()+", "+s.getY());
 			
 			//a) sprite is outside of group bounds or b)sprite expired. Remove it from array.
-			if(!s.update(elapsedTime, group) || isOutsideOfGroup(s))
+//			if(!s.update(elapsedTime, group) || isOutsideOfGroup(s))
+//				iter.remove();
+
+			if(!s.update(elapsedTime, group))
 				iter.remove();
 			
 //			Utils.log("Sprite ID: "+s.id+" Updated pos: "+s.getX()+", "+s.getY());

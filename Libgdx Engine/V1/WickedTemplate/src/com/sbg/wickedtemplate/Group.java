@@ -45,6 +45,7 @@ public class Group extends ESprite {
 	public float mScreenRatio = 1;
 	public Resolver mResolver = World.getResolver();
 	public Matrix3 matrix = new Matrix3();
+	private Alignment groupAlignment; //not used yet
 	
 	//SPRITE FIELDS
 	public String groupAtlas;
@@ -63,6 +64,7 @@ public class Group extends ESprite {
 	public float parallax = 0; //group parallax
 	private SpriteManager spriteManager;
 	public List<ESprite> spriteSpecs; //list of sprite specifications such as names, texture regions, frames, frame durations
+	public Alignment spriteAlignment;
 	
 	//OTHER FIELDS
 	private float elapsedTime;
@@ -113,6 +115,8 @@ public class Group extends ESprite {
 			//create a pool of spawn points from the deserialized array of spawn point values
 			spriteManager.createSpawnPointPool(spawnPointsValues);
 		}
+		//pass default group sprite alignment
+		spriteManager.setSpriteAlignment(spriteAlignment);
 		//create a list of sprite states from the deserialized list of state configs
 		spriteManager.createSpriteStateList(stateList);
 		//fill up the array with sprites

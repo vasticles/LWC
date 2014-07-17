@@ -54,6 +54,7 @@ public class ESprite extends Sprite {
 	public Effect effect;
 	private StateManager stateManager;
 	public String atlasPath;
+	public Alignment alignment;
 
 	public ESprite() {}
 	
@@ -66,6 +67,7 @@ public class ESprite extends Sprite {
 		name = spr.name;
 		id = random.nextInt(100);
 		group = spr.group;
+		alignment = spr.alignment;
 		frames = spr.frames;
 		isAnimated = spr.isAnimated;
 		if(isAnimated) {
@@ -110,9 +112,9 @@ public class ESprite extends Sprite {
 	}
 	
 	public void setVelocity(float angle, float rate) {
-		this.rate = rate;
-//		Utils.log(rate+"")
-		velocity.set(rate, 0).setAngle(angle);
+		this.rate = Utils.percentToPixel(rate, group.mGroupWidthPix);
+//		Utils.log(this.rate+"");
+		velocity.set(this.rate, 0).setAngle(angle);
 	}
 	
 	public float getAngle() {

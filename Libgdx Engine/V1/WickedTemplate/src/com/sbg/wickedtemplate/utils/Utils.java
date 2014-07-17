@@ -77,7 +77,7 @@ public class Utils {
 	}
 	
 	public static float[][] stringArrToTwoDimFloatArr(String[] array) {
-		float[][] newArr = new float[array.length][array.length];
+		float[][] newArr = new float[array.length][2];
 		int ind = 0;
 		for(String val : array) {
 			newArr[ind][0] = Float.parseFloat(val.split(",")[0]);

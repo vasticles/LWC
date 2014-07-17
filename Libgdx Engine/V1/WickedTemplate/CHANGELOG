@@ -1,3 +1,9 @@
+1.0.3
+-Added alignment for sprites, and as a global group property. If sprite has custom alignment, it will override group.
+-Alignment is an enum
+-Changed velocity's rate units from pixels to percent
+-Fixed a bug with string array to 2d float array
+
 1.0.2
 -Added border spawning
 -Made a SpawnMode enum
