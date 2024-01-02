@@ -1,9 +1,5 @@
 #Live Wallpaper Creator
 
-==========================================================
-THIS IS A PRIVATE REPOSITORY. DISTRIBUTION AND DEMONSTRATION TO THIRD-PARTIES IS ONLY WITH PERMISSION OF AUTHOR
-==========================================================
-
 LWC 3 (or 3.5?) can be powered by Wicked Template that is written using mainly LibGdx library.
 
 The core code can be found under Wicked Template. Since LibGdx is cross-platform, there are 3 more folders to cater to Android,
